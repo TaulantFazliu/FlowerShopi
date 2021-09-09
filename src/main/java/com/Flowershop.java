@@ -151,7 +151,7 @@ public class Flowershop {
             bouquete.addFlower(flower3);
             flowershop.addProduct(bouquete, 1);
             System.out.println(bouquete);
-            flowershop.buildBouquete(Size.L, bouquete,1);
+            flowershop.buildBouquete(Size.M, bouquete,1);
 //            flowershop.buyProduct(bouquete, 1);
 
 
