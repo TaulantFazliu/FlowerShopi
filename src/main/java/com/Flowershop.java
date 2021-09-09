@@ -80,7 +80,7 @@ public class Flowershop {
             products.put(bouquete, 1);
     }
 
-    public void buildBouquete(Size size, Product product, int qty) throws FlowerShopException {
+    public void buildBouquete(Size size, Flower product, int qty) throws FlowerShopException {
         if (qty > size.getNumberOfFlowers()) {
             throw new FlowerShopException("The required quantity is not correct");
         }
@@ -106,11 +106,15 @@ public class Flowershop {
 
         int toBeCompleted = Math.min(qty, bouquete.flowersNeeded());
         for (Product p : products.keySet()) {
-            if (p.equals(product) && toBeCompleted != 0) {
-                Flower flower = (Flower) p;
-                bouquete.addFlower(flower);
-                products.put(p, products.get(p) - 1);
-                toBeCompleted--;
+            if (p.equals(product) || toBeCompleted != 0) {
+                if (!(p instanceof Bouquete)) {
+                    Flower flower = (Flower) p;
+                    bouquete.addFlower(flower);
+                    products.put(p, products.get(p) - 1);
+                    --toBeCompleted;
+                }else {
+                    products.get(product);
+                }
             }
         }
 
@@ -132,31 +136,17 @@ public class Flowershop {
     public static void main(String[] args) {
         try {
             Flowershop flowershop = new Flowershop("Tali's shop");
-            flowershop.createBouquete(Size.M, false);
-//            flowershop.createBouquete(Size.L,true);
-            Flower flower1=new Violet("Violet", "Violet",12.4,Seasons.SUMMER,true);
             Flower flower4=new Rose("Rose","red",4.3,Seasons.SUMMER,4);
-            Flower flower2=new Marigold("Marigold", "Marigold",10.4,Seasons.ALLSEASONAL,Groups.CELANDULA);
-            Flower flower3=new Violet("Violet", "Violet",12.4,Seasons.SUMMER,true);
-            System.out.println(flower1);
-            flowershop.addProduct(flower1, 1);
             flowershop.addProduct(flower4, 10);
-            flowershop.addProduct(flower2,3);
             Bouquete bouquete=new Bouquete(Size.M,true);
-            bouquete.addFlower(flower4);
-            bouquete.addFlower(flower2);
-            bouquete.addFlower(flower3);
-            bouquete.addFlower(flower3);
-            bouquete.addFlower(flower3);
-            bouquete.addFlower(flower3);
+//            bouquete.addFlower(flower4);
             flowershop.addProduct(bouquete, 1);
             System.out.println(bouquete);
-            flowershop.buildBouquete(Size.M, bouquete,1);
-//            flowershop.buyProduct(bouquete, 1);
+            flowershop.buildBouquete(Size.M, flower4,7);
+            System.out.println(bouquete);
+            flowershop.buyProduct(flower4, 2);
+            System.out.println(flower4);
 
-
-//            flowershop.loadProducts();
-//            flowershop.buildBouquete(Size.M,new Rose("Rose","red",12.4,Seasons.SUMMER,4),5);
 
 
             System.out.println(flowershop);
